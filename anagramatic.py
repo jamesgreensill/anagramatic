@@ -1,8 +1,13 @@
+import os
+
 if __name__ == "__main__":
-    with open("data/words.txt", "r") as file:
+    with open("data\\words.txt", "r") as file:
         lines = file.readlines()
         anagrams = {}
         all_anagram_words = set()  # To store all words that are part of anagrams
+
+        if not os.path.exists("output"):
+            os.mkdir("output")
 
         # Process each line to sort alphabetically and group anagrams
         for line in lines:
@@ -44,7 +49,7 @@ if __name__ == "__main__":
         ), key=lambda item: len(item[1]), reverse=True)
 
         # Write the anagrams information to file
-        with open("anagrams.txt", "w") as output_file:
+        with open("output\\anagrams.txt", "w") as output_file:
             output_file.write(f"Total Anagram Groups: {unique_anagrams}\n")
             output_file.write(f"Total Unique Anagrams: {
                               total_words_in_groups}\n")
@@ -63,6 +68,6 @@ if __name__ == "__main__":
             line.strip() for line in lines if line.strip() not in all_anagram_words]
 
         # Write non-anagram words to a new file
-        with open("non_anagrams.txt", "w") as non_anagrams_file:
+        with open("output\\non_anagrams.txt", "w") as non_anagrams_file:
             non_anagrams_file.write("All words that are not anagrams.\n\n")
             non_anagrams_file.write("\n".join(non_anagram_words))
